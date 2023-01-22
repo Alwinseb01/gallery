@@ -7,7 +7,30 @@ import { AiTwotoneDelete } from 'react-icons/ai';
 
 
 function ImageGrid() {
-  const [imageList, setImageList] = useState([]);
+
+const images= [
+  {
+      id: 1,
+      url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
+  {
+      id: 2,
+      url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
+  {
+      id: 3,
+      url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
+  {
+      id: 4,
+      url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
+  {
+      id: 5,
+      url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'
+  },
+  {
+      id: 6,
+      url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'
+  },
+]
+const [imageList, setImageList] = useState(images);
 const [selectedImageId, setSelectedImageId] = useState(null);
 
   const handleClick = (id) => {
@@ -24,9 +47,8 @@ const [selectedImageId, setSelectedImageId] = useState(null);
         'Authorization':'Bearer ' + localStorage.getItem('token')
       }
     })
-
-
-    console.log(resp)
+    setImageList(resp.data)
+    console.log(imageList)
     }
 
     getImages()
@@ -34,44 +56,29 @@ const [selectedImageId, setSelectedImageId] = useState(null);
   }, []);
 
   const deleteImage = (id) => {
-    axios.delete(`https://url/${id}`)
-        .then(response => {
-            const newImages = images.filter(img => img.id !== id);
-            setImageList(newImages);
-            setSelectedImageId(null);
-        })
-        .catch(error => console.log(error));
+    // axios.delete(`https://url/${id}`)
+    //     .then(response => {
+    //         const newImages = images.filter(img => img.id !== id);
+    //         setImageList(newImages);
+    //         setSelectedImageId(null);
+    //     })
+    //     .catch(error => console.log(error));
+
+    imageList.splice(id, 1);
+    setImageList(imageList);
+    setSelectedImageId(null);
+    console.log(imageList);
 }
+
 
 
   const handleDelete = (id) => {
     deleteImage(id);
   };
-  const images= [
-    {
-        id: 1,
-        url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
-    {
-        id: 2,
-        url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
-    {
-        id: 3,
-        url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
-    {
-        id: 4,
-        url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'    },
-    {
-        id: 5,
-        url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'
-    },
-    {
-        id: 6,
-        url: 'https://blog.hubspot.com/hubfs/image-file-extensions.jpg'
-    },
-]
+  
   return (
     <div className="grid grid-cols-3 gap-4 h-full w-full mt-100 ">
-      {images.map(image => (
+      {imageList.map(image => (
        <div key={image.id}>
        <img
           key={image.id}

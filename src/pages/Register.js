@@ -1,15 +1,12 @@
 import axios from "axios";
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-// import { useAuth } from "../contexts/AuthContext";
-import { useNavigate, Navigate } from "react-router-dom";
-import Gallery from "./Gallery";
+import { useNavigate } from "react-router-dom";
 // import "../assets/main.css"
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    let navigate = useNavigate(); 
 
     async function login() {
         const res = await axios.post("https://6333-202-131-158-114.in.ngrok.io/account/login",{
@@ -19,14 +16,11 @@ export default function Login() {
 
         if(res) {
             localStorage.setItem("token", JSON.stringify(res.data.access));
-            return <Navigate to="/gallery" />
         }
-        return <Navigate to="/gallery" /> 
     }
     
     return (
         <div className="flex items-center justify-center h-screen">
-
             <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">
                 <div className="-mx-3 md:flex mb-6">
                     <div className="md:w-full px-3">
@@ -49,11 +43,11 @@ export default function Login() {
                         Sign In
                     </button> */}
 
-                    <button onClick={navigate(Gallery)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
-                        Sign In
+                    <button onClick={login} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                        Sign Up
                     </button>
-                    <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="register">
-                        New User? Sign Up
+                    <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/">
+                       Existing User? Sign in
                     </a>
                 </div>
             </div>
